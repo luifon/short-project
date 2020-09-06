@@ -3,6 +3,7 @@ package com.example.demo.domains.movies.controller;
 import com.example.demo.domains.movies.dtos.MovieByIdDTO;
 import com.example.demo.domains.movies.dtos.MovieCreateDTO;
 import com.example.demo.domains.movies.dtos.MovieUpdateDTO;
+import com.example.demo.domains.movies.dtos.QuantityLetterDTO;
 import com.example.demo.domains.movies.entity.Movie;
 import com.example.demo.domains.movies.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class MovieController {
     @GetMapping("/{id}")
     public Movie findById(@PathVariable("id") UUID id) {
         return movieService.findById(id);
+    }
+
+    @GetMapping("/letter_metrics_top10")
+    public List<QuantityLetterDTO> findByLetterMetricTop10() {
+        return movieService.findByLetterMetricTop10();
     }
 
     @PostMapping()
