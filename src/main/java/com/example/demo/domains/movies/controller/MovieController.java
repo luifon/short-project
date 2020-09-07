@@ -6,26 +6,23 @@ import com.example.demo.domains.movies.dtos.MovieUpdateDTO;
 import com.example.demo.domains.movies.dtos.QuantityLetterDTO;
 import com.example.demo.domains.movies.entity.Movie;
 import com.example.demo.domains.movies.service.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("movies")
 public class MovieController {
 
-    @Autowired
     private final MovieService movieService;
-
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
 
     @GetMapping
     public List<MovieByIdDTO> findAll() {
@@ -42,19 +39,19 @@ public class MovieController {
         return movieService.findByLetterMetricTop10();
     }
 
-    @PostMapping()
-    public ResponseEntity<Movie> save(@RequestBody MovieCreateDTO movie) {
+    @PostMapping
+    public ResponseEntity<Movie> save(@Valid @RequestBody MovieCreateDTO movie) {
         Movie createdMovie = movieService.create(movie);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdMovie.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
-
     }
 
     @PutMapping("/{id}")
-    public Movie update(@PathVariable("id") UUID id, @RequestBody MovieUpdateDTO movie) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Movie update(@PathVariable("id") UUID id, @Valid @RequestBody MovieUpdateDTO movie) {
         return movieService.update(id, movie);
     }
 

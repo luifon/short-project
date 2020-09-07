@@ -6,6 +6,7 @@ import com.example.demo.domains.movies.dtos.MovieUpdateDTO;
 import com.example.demo.domains.movies.dtos.QuantityLetterDTO;
 import com.example.demo.domains.movies.entity.Movie;
 import com.example.demo.domains.movies.repository.MovieRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,14 +19,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MovieService {
 
     private final MovieRepository movieRepository;
-
-    @Autowired
-    public MovieService(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
-    }
 
     public List<MovieByIdDTO> findAll() {
         return movieRepository.findAll();

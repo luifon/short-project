@@ -3,6 +3,7 @@ package com.example.demo.domains.movies.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class MovieCreateDTO {
 
     @NotBlank
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
     private String title;
     private String synopsis;
 

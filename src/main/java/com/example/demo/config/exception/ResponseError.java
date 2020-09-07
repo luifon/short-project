@@ -1,4 +1,4 @@
-package com.example.demo.config.Exception;
+package com.example.demo.config.exception;
 
 import java.io.Serializable;
 

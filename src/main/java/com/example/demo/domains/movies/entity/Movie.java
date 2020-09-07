@@ -2,6 +2,7 @@ package com.example.demo.domains.movies.entity;
 
 import com.example.demo.domains.movies.dtos.MovieCreateDTO;
 import com.example.demo.domains.movies.dtos.MovieUpdateDTO;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 @Getter
 @Entity
+@NoArgsConstructor
 @Where(clause = "deleted_at is null")
 @Table(name = "tb_movie", schema = "newproj")
 public class Movie {
@@ -63,23 +65,5 @@ public class Movie {
     public void update(MovieUpdateDTO movie) {
         this.userRating = movie.getUserRating();
     }
-
-    public java.util.UUID getId(){return this.id;}
-
-    public java.lang.String getTitle(){return this.title;}
-
-    public java.lang.String getSynopsis(){return this.synopsis;}
-
-    public int getUserRating(){return this.userRating;}
-
-    public java.time.LocalDateTime getReleaseDate(){return this.releaseDate;}
-
-    public java.time.LocalDateTime getDeletedAt(){return this.deletedAt;}
-
-    public java.time.LocalDateTime getCreatedAt(){return this.createdAt;}
-
-    public java.time.LocalDateTime getUpdatedAt(){return this.updatedAt;}
-
-    public Movie(){}
 
 }

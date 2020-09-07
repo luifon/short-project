@@ -38,7 +38,7 @@ public abstract class IntegrationTestConfiguration {
     }
 
     protected String getIdHeaderLocation(Response response) {
-        String location = response.getHeader("location");
+        String location = response.getHeader("Location");
         Matcher matcher = UUID_PATTERN.matcher(location);
         if (matcher.find()) {
             return matcher.group();
