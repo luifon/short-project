@@ -31,8 +31,8 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie findById(UUID id) {
-        return movieRepository.findById(id);
+    public MovieByIdDTO findById(UUID id) {
+        return new MovieByIdDTO(movieRepository.findById(id));
     }
 
     public Movie create(MovieCreateDTO movie) {
@@ -61,12 +61,19 @@ public class MovieService {
 
     private List<String> getAllTitles() {
         return movieRepository.findAll().stream()
-                .map(MovieByIdDTO::getTitle).collect(Collectors.toList());
+                .map(MovieByIdDTO::getTitle).map(String::toUpperCase).collect(Collectors.toList());
     }
 
     public int getCharFreq(String s, Character letter) {
         long count = s.codePoints().filter(ch -> ch == letter).count();
         return Math.toIntExact(count);
+    }
+
+    public void delete(UUID id) {
+        Movie byId = movieRepository.findById(id);
+        byId.delete();
+        movieRepository.save(byId);
+
     }
 
 }

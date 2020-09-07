@@ -1,0 +1,6 @@
+{
+  "title": "{{title}}",
+  "synopsis": "{{synopsis}}",
+  "userRating": "{{userRating}}",
+  "releaseDate": "{{releaseDate}}"
+}

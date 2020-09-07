@@ -7,8 +7,12 @@ import com.example.demo.domains.movies.dtos.QuantityLetterDTO;
 import com.example.demo.domains.movies.entity.Movie;
 import com.example.demo.domains.movies.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +33,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Movie findById(@PathVariable("id") UUID id) {
+    public MovieByIdDTO findById(@PathVariable("id") UUID id) {
         return movieService.findById(id);
     }
 
@@ -39,13 +43,25 @@ public class MovieController {
     }
 
     @PostMapping()
-    public Movie save(@RequestBody MovieCreateDTO movie) {
-        return movieService.create(movie);
+    public ResponseEntity<Movie> save(@RequestBody MovieCreateDTO movie) {
+        Movie createdMovie = movieService.create(movie);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdMovie.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
+
     }
 
     @PutMapping("/{id}")
     public Movie update(@PathVariable("id") UUID id, @RequestBody MovieUpdateDTO movie) {
         return movieService.update(id, movie);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") UUID id) {
+        movieService.delete(id);
     }
 
 }
