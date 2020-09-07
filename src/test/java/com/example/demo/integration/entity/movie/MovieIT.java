@@ -31,9 +31,9 @@ public class MovieIT extends IntegrationTestConfiguration {
     public void setup() {
         super.setUp();
         RestAssured.basePath = "/movies";
-        prepareData();
         movieCreate = ResourceUtils.getContentFromResource("/json/movie-create.json");
         movieUpdate = ResourceUtils.getContentFromResource("/json/movie-update.json");
+        prepareData();
     }
 
     private void prepareData() {
@@ -44,7 +44,7 @@ public class MovieIT extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void findAll_test() {
+    public void findAll() {
         given()
                 .get()
                 .then()
@@ -56,7 +56,7 @@ public class MovieIT extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void findByLetterMetricTop10_test() {
+    public void findByLetterMetricTop10() {
         given()
                 .get("/letter_metrics_top10")
                 .then()
@@ -84,7 +84,7 @@ public class MovieIT extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void findById_test() {
+    public void findById() {
         given()
                 .pathParam("id", movieById)
                 .get("/{id}").then()
@@ -94,7 +94,7 @@ public class MovieIT extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void delete_test() {
+    public void delete() {
         given()
                 .pathParam("id", movieById)
                 .contentType(ContentType.JSON)
@@ -105,7 +105,7 @@ public class MovieIT extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void findById_notFound_test() {
+    public void findById_notFound() {
         given()
                 .pathParam("id", UUID.randomUUID())
                 .get("/{id}").then()
@@ -113,7 +113,7 @@ public class MovieIT extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void create_test() {
+    public void create() {
         String createJson = movieCreate
                 .replace("TITLE", "CREATE TEST TITLE")
                 .replace("SYNOPSIS", "CREATE TEST SYNOPSIS")
